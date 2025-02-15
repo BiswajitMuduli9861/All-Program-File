@@ -1,0 +1,19 @@
+.input{
+    height: 35px;
+    width: 300px;
+    display: flex;
+    margin: auto;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+.btn{
+    height: 35px;
+    width: 300px;
+    display: flex;
+    margin: auto;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+
+    
+}
