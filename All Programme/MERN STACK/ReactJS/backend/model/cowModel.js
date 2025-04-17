@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const cowSchema =new mongoose.Schema({
+    cowId:{
+        type:Number,
+        required:true,
+        unique:true,
+    },
     cowName:{
         type:String,
         required:true,
@@ -19,29 +24,37 @@ const cowSchema =new mongoose.Schema({
     }, 
     height:{
         type:Number,
-        requtied:true
+        required:true
     },
     price:{
         type:Number,
         required:true,
     },
-    image:{
-        type:String,
-        required:true,
-    },
+    // image:{
+    //     type:String,
+    //     required:true,
+    // },
     description:{
         type:String,
         required:true,
     },
-    owner:{
+    owner:{       //this field ko change karo localstorage se lao id login user ka   //populate("owner") hoga "users" ke naam par nehi hoga
         type:mongoose.Schema.Types.ObjectId,
         ref:"users",
-        required:true,
+        
     },
-    Dob:{
+    DOB:{
         type:Date,
         required:true,
     },
+    milkData:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"milks",   // milks heuchi model
+    }],
+    healthData:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"healths",
+    }
   
 
 }, {timestamps:true});

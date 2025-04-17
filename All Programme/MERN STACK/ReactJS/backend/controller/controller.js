@@ -4,10 +4,10 @@ const bcrypt = require('bcrypt')
 const userModel = require("../model/userModel");
 
 const signUp = async(req,res) =>{
-    const {name,email,password,comfirmpassord,radio} = req.body;
+    const {name,email,password,comfirmpassord} = req.body;
     
     try{
-        if(!name || !email || !password || !comfirmpassord || !radio){
+        if(!name || !email || !password || !comfirmpassord){
             return res.status(422).json({error:"plz fill the field properly"})
         }
         const userExsit = await userModel.findOne({email:email})
@@ -19,9 +19,10 @@ const signUp = async(req,res) =>{
         }
         const hashPassword =  await bcrypt.hash(password, 10)
         const hashConfirmPassword =  await bcrypt.hash(comfirmpassord, 10)
-        const user = new userModel({name,email,password:hashPassword,comfirmpassord:hashConfirmPassword,radio});
+        const user = new userModel({name,email,password:hashPassword,comfirmpassord:hashConfirmPassword});
         await user.save();
         res.status(201).json({message:"user register successfully"})
+        console.log("kjdjfkjkdf")
     }catch(error){
         return res.status(500).json({ error: "Internal Server Error", details: error.message });
     }
@@ -55,6 +56,16 @@ const login = async(req,res)=>{
 }
 
 
+ const allcows = async(req,res)=>{
+    try {
+        
+        const allcowsData = await userModel.findById({_id:req.params.id}).populate("cowsData");          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi
+        res.status(201).json({message:"All cows",userAllCows:allcowsData})
+    } catch (error) {
+        return res.status(500).json({ error: "Internal Server Error", details: error.message });
+    }
+ }
 
 
-module.exports={signUp,login}
+
+module.exports={signUp,login,allcows}

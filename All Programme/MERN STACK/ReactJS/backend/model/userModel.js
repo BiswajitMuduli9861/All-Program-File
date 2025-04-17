@@ -8,6 +8,7 @@ const userSchema =new mongoose.Schema({
     email:{
         type:String,
         required:true,
+        unique:true,
     },
     password:{
         type:String,
@@ -17,14 +18,13 @@ const userSchema =new mongoose.Schema({
         type:String,
         required:true,
     },
-    cows:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"cows",
-        required:true,
-    }
+    cowsData:[{  // refrence of cow model // jetebele reference anya model ku naba  || required: true|| nehi karna error aega   // populate("cowsData") hoga "cows" ke naam par nehi hoga
+        type:mongoose.Schema.Types.ObjectId,  
+        ref:"cows",     // ref:"cows"  // cows heuchi model 
+    }]
   
 
-});
+},{ timestamps: true });
 
 const userModel = new mongoose.model("users", userSchema);
 

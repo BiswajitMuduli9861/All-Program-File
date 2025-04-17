@@ -202,7 +202,9 @@ const Login = ({Login}) => {
         })
         console.log(loginRes)
         const data= await loginRes.json()
-        console.log(data.userId)
+        // console.log(data.userId)
+        // localStorage.setItem('ownerId',data.userId)
+        // console.log(localStorage.getItem('ownerId'))
         if(loginRes.status === 400){
           // console.log(emailNotRegister)
           setEmailNotRegister(true);
@@ -210,6 +212,8 @@ const Login = ({Login}) => {
           setEmailNotRegister(false);
         }
         if(loginRes.ok){
+          localStorage.setItem('ownerId',data.userId)
+          // console.log(localStorage.getItem('ownerId'))
           toast.success("Login successfully");
           setEmail("");
           setPassword("");
