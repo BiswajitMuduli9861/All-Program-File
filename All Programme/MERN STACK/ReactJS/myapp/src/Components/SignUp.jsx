@@ -213,7 +213,7 @@ const Login = ({Login}) => {
         }
         if(loginRes.ok){
           localStorage.setItem('ownerId',data.userId)
-          // console.log(localStorage.getItem('ownerId'))
+          console.log(localStorage.getItem('ownerId'))
           toast.success("Login successfully");
           setEmail("");
           setPassword("");

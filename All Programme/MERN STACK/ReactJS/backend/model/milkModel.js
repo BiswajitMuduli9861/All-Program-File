@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 const milkSchema =new mongoose.Schema({
     
     cowId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"cows",
-        
+        type:Number,
+        required:true,
     },
     milk:{
         type:Number,

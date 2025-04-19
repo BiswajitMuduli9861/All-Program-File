@@ -14,7 +14,7 @@ const Home = () => {
       <CardRotater/>
       <Equipment/>
       <Footer/>
-      <AddCow/>
+      {/* <AddCow/> */}
     </>
   )
 }

@@ -4,14 +4,22 @@ const milkModel = require("../model/milkModel");
 const addMilk = async(req,res) =>{
     console.log("HII")
     const {cowId,milk,fat,sat} = req.body;
+    console.log(req.body)
     
     try{
-        if(!milk || !fat || !sat || !cowId){
+        if(!cowId || !milk || !fat || !sat){
             return res.status(422).json({error:"plz fill the field properly"})
         }
+        const cowExist = await cowModel.findOne({cowId:cowId})
+        if(!cowExist){
+            return res.status(400).json({message:"Cow not Register"})
+        }
         const milkDataResult = new milkModel({cowId,milk,fat,sat});
+        console.log(milkDataResult)
         await milkDataResult.save();
-        await cowModel.findByIdAndUpdate({_id:cowId}, { $push: { milkData: milkDataResult._id } });
+
+        await cowModel.findOneAndUpdate({ cowId: cowId }, { $push: { milkData: milkDataResult._id } });
+
             if(!milkDataResult){
                 return res.status(404).json({error:"Milk not Found"});
             }

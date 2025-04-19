@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const cowHealthSchema = new mongoose.Schema({
   cowId: { 
-    type: mongoose.Schema.Types.ObjectId, 
+    type: Number, 
     ref: 'cows',  // Ensure cow model is named "cows"
     required: true 
   },

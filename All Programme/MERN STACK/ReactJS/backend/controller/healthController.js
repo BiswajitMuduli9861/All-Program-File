@@ -5,16 +5,19 @@ const cowModel = require('../model/cowModel');
     const addHealth = async (req, res) => {
 
         const {cowId,cowName,healthStatus,symptoms,diagnosis,treatment,medication,temperature,pulse,respiratoryRate,description} = req.body;
-
+console.log(req.body)
         try {
             // console.log(req.body)
             if (!cowId || !cowName || !healthStatus) {
                 return res.status(422).json({ error: "Please fill the fields properly" });
             }
-
+            const cowExist = await cowModel.findOne({cowId:cowId})
+            if(!cowExist){
+                return res.status(400).json({message:"Cow not Register"})
+            }
             const healthData = new healthModel({cowId,cowName,healthStatus,symptoms,diagnosis,treatment,medication,temperature,pulse,respiratoryRate,description});
             await healthData.save();
-            await cowModel.findByIdAndUpdate({ _id: cowId }, { $push: { healthData: healthData._id } });
+            await cowModel.findOneAndUpdate({ cowId: cowId }, { $push: { healthData: healthData._id } });    //agar tum jadi ||findByIdAndUpdate()|| naba only Mongodb ka _id use haba nahale error asiba , au jadi tamara personal cow id naba ||cowId:99|| then use ||findOneAndUpdate|| 
 
             res.status(201).json({ message: "Health data added successfully", healthId: healthData._id });
 
@@ -25,7 +28,7 @@ const cowModel = require('../model/cowModel');
 
     const allHealthWithCow = async(req,res)=>{
         try {
-            const healthData = await healthModel.find({}).populate('cowId');          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi 
+            const healthData = await healthModel.find({});          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi 
 
             if(!healthData){
                 return res.status(404).json({error:"Health not Found"});

@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import axios from 'axios'
 
 const CowHealthForm = () => {
   const [form, setForm] = useState({
@@ -43,9 +44,19 @@ const CowHealthForm = () => {
     setForm({ ...form, medication: meds });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log('Form Data:', form);
+    // console.log('Form Data:', form);
+
+    try {
+      const healthData = await axios.post("http://localhost:5000/av1/addhealth",form)
+      console.log(healthData)
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
   };
 
   const renderFloatingInput = (label, name, type = 'text') => (

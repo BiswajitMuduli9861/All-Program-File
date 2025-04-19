@@ -1,16 +1,22 @@
 const cowModel = require("../model/cowModel");
 const userModel = require("../model/userModel");
 
+
 const addCow = async(req,res) =>{
-    const {cowId,cowName,breed,age,weight,height,price,description,owner,DOB,} = req.body;
-    
+    const {cowId,cowName,breed,age,weight,height,price,description,DOB,ownerId} = req.body;
+    // const {image} = req.file.originalname;
+    const image = req.file ? req.file.originalname : null;
+    // console.log(image)
+    // console.log(ownerId)
+    // console.log(req.body)
+    // console.log(req.file.originalname);   //image only access karipariba req.file se  
     try{
-        if(!cowId || !cowName || !breed || !age || !weight || !height || !price || !description || !owner || !DOB){
+        if(!cowId || !cowName || !breed || !age || !weight || !height || !price || !description ||!image  || !DOB || !ownerId){
             return res.status(422).json({error:"plz fill the field properly"})
         }
-        const cow = new cowModel({cowId,cowName,breed,age,weight,height,price,description,owner,DOB});
+        const cow = new cowModel({cowId,cowName,breed,age,weight,height,price,description,image,DOB,ownerId});
         await cow.save();
-        await userModel.findByIdAndUpdate({_id:owner}, { $push: { cowsData: cow._id } });
+        await userModel.findByIdAndUpdate({_id:ownerId}, { $push: { cowsData: cow._id } });
         res.status(201).json({message:"Add Cow Successfully",cowId:cow._id})
         
     }catch(error){

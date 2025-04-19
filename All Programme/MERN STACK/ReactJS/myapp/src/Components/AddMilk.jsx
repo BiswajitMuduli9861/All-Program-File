@@ -44,9 +44,10 @@
 // export default AddMilk
 
 import React, { useState } from 'react';
+import axios from 'axios'
 
 const AddMilk = () => {
-  const [form, setForm] = useState({
+  const [milk, setMilk] = useState({
     cowId: '',
     milk: '',
     fat: '',
@@ -55,12 +56,20 @@ const AddMilk = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setMilk(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log('Milk Form Data:', form);
+    // console.log('Milk Form Data:', form);
+    const milkData = await axios.post("http://localhost:5000/av1/addmilk",
+      milk,{
+        headers:{
+           "Content-Type":"application/json"
+        }
+      }
+    )
+    console.log(milkData);
   };
 
   const renderFloatingInput = (label, name, type = 'text') => (
@@ -71,7 +80,7 @@ const AddMilk = () => {
         id={`floating-${name}`}
         placeholder={label}
         name={name}
-        value={form[name]}
+        value={milk[name]}
         onChange={handleChange}
       />
       <label htmlFor={`floating-${name}`}>{label}</label>

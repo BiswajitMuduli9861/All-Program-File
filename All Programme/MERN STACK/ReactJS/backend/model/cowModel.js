@@ -30,22 +30,22 @@ const cowSchema =new mongoose.Schema({
         type:Number,
         required:true,
     },
-    // image:{
-    //     type:String,
-    //     required:true,
-    // },
     description:{
         type:String,
+        required:true,
+    },
+    image:{
+        type:String,
+        required:true,
+    },
+    DOB:{
+        type:Date,
         required:true,
     },
     owner:{       //this field ko change karo localstorage se lao id login user ka   //populate("owner") hoga "users" ke naam par nehi hoga
         type:mongoose.Schema.Types.ObjectId,
         ref:"users",
         
-    },
-    DOB:{
-        type:Date,
-        required:true,
     },
     milkData:[{
         type:mongoose.Schema.Types.ObjectId,
@@ -54,7 +54,7 @@ const cowSchema =new mongoose.Schema({
     healthData:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"healths",
-    }
+    },
   
 
 }, {timestamps:true});

@@ -2,26 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAllCows } from '../store/slices/UserSlice';
 import { styled } from 'styled-components'
+import IndivisualCow from './IndivisualCow'
 
 const AllCows = () => {
   const dispatch = useDispatch();
   const ownerId = localStorage.getItem("ownerId")
-  useEffect(() => {
-    const allCow = async () => {
-    
-      try {
-        const response = await fetch(`http://localhost:5000/av1/userwithallcows/${ownerId}`);
-        const data = await response.json();
-        // console.log(data);
+
   
-        dispatch(addAllCows(data)); // dispatch after data is fetched
-      } catch (error) {
-        console.error("Error fetching cows:", error);
-      }
-    };
+  const allCow = async () => {
+  
+    try {
+      const response = await fetch(`http://localhost:5000/av1/userwithallcows/${ownerId}`);
+      const data = await response.json();
+      // console.log(data);
+
+      dispatch(addAllCows(data)); // dispatch after data is fetched
+    } catch (error) {
+      console.error("Error fetching cows:", error);
+    }
+  };
+  useEffect(() => {
 
     allCow();
-  }, [dispatch]); // run only once when component mounts
+  }, []); // run only once when component mounts
 
 
   const data = useSelector((state)=>{
@@ -39,21 +42,31 @@ const AllCows = () => {
 // console.log(data?.userAllCows.cowsData)  //better 
 // console.log(data.userAllCows.cowsData)   // show error data not find ui break
 
+
+
+
+ const indCow =()=>{
+  alert("Kuna")
+ }
+
   return (
 
 
     <>
       <div className="container-fluid">
         <div className="container pt-5 pb-5">
-          <div className="row row-cols-1 row-cols-md-3 g-4">
+          <div className="">
+            <IndivisualCow/>
+          </div>
+          <div className={`row row-cols-1 row-cols-md-3 g-4`}>
               {
                 data?.userAllCows?.cowsData.map((value,index)=>(
-                <div className="col" key={index}>
+                <div className="col" key={index}  style={{cursor:"pointer"}}>
               
 
-                <div className="card allCowCardHover" style={{height:"55vh"}}>
+                <div className="card allCowCardHover" onClick={indCow} style={{height:"55vh"}}>
   
-                  <img src="/img1.avif" className="card-img-top" alt="..." style={{height:"50%"}}/>
+                  <img src={`http://localhost:5000/uploads/${value.image}`} className="card-img-top" alt="..." style={{height:"50%"}}/>
                   <ul class="list-group list-group-flush">
                       <li class="list-group-item">cowId:{value.cowId}</li>
                       <li class="list-group-item">Cow Name: {value.cowName}</li>
@@ -61,7 +74,7 @@ const AllCows = () => {
                     </ul>
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item">Owner Name: {data.userAllCows.name}</li>
-                      <li class="list-group-item">Owner: {data.userAllCows.email}</li>
+                      <li class="list-group-item">Owner MailId: {data.userAllCows.email}</li>
                       </ul>
                      
                   <div className="card-footer">

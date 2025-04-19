@@ -147,7 +147,7 @@ const Navbar = ({ User, Logout }) => {
                 </NavLink>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><NavLink className="dropdown-item" to="/addmilk">Add Milk</NavLink></li>
-                  <li><NavLink className="dropdown-item" to="/allmilk">Cow Milk</NavLink></li>
+                  <li><NavLink className="dropdown-item" to="/cowmilks">Cow Milk</NavLink></li>
                   
                 </ul>
               </li>
@@ -157,7 +157,7 @@ const Navbar = ({ User, Logout }) => {
                 </NavLink>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><NavLink className="dropdown-item" to="/addhealth">Add Health</NavLink></li>
-                  <li><NavLink className="dropdown-item" to="/allhealth">Cow Health</NavLink></li>
+                  <li><NavLink className="dropdown-item" to="/cowhealths">Cow Health</NavLink></li>
 
                 </ul>
               </li>
