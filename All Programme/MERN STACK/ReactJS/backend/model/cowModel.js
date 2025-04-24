@@ -47,7 +47,7 @@ const cowSchema =new mongoose.Schema({
         ref:"users",
         
     },
-    milkData:[{
+    milkData:[{   //acces karibariba ||MilkData|| naare  
         type:mongoose.Schema.Types.ObjectId,
         ref:"milks",   // milks heuchi model
     }],

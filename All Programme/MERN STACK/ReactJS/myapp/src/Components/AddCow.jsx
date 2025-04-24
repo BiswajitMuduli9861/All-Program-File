@@ -344,12 +344,16 @@
 
 
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+import { ToastContainer, toast ,Bounce} from 'react-toastify';
 
 const AddCow = () => {
   const ownerId = localStorage.getItem('ownerId');
   // console.log(localStorage.getItem('ownerId'))
   // console.log(ownerId)
+  const [cowIdError, setCowIdError] = useState(false)
+  console.log(cowIdError)
   const [form, setForm] = useState({
     cowId: '',
     cowName: '',
@@ -384,7 +388,7 @@ const AddCow = () => {
     formData.append("price", form.price);
     formData.append("description", form.description);
     formData.append("DOB", form.dob);
-    formData.append("ownerId", ownerId);
+    formData.append("owner", ownerId);
     // formData.append("image", form.image);
     if (form.image) {
       formData.append("image", form.image);
@@ -392,18 +396,38 @@ const AddCow = () => {
 
     try {
       const addCow = await axios.post("http://localhost:5000/av1/addcow/",
-        formData,{
-
-          headers:{'Content-Type':'multipart/form-data'},
-        }
+        formData
       );    //  ||headers:{'Content-Type':'multipart/form-data'}|| is optional
       console.log(addCow);
+      setCowIdError(false)
+      if(addCow.statusText ==='Created'){
+        setForm({
+          cowId: '',
+          cowName: '',
+          breed: '',
+          age: '',
+          weight: '',
+          height: '',
+          price: '',
+          description: '',
+          dob: '',
+          image: ''
+        })
+        toast.success("Added Cow Successfully");
+      }
     } catch (error) {
+      if(error.response.status === 409){
+        setCowIdError(true)
+      }else{
+        setCowIdError(false)
+      }
       console.error("Error uploading cow:", error);
     }
   };
 
   return (
+    <>
+     <ToastContainer />
     <div className="container py-5">
       <h2 className="text-center mb-4 text-primary">🐄 Add Cow</h2>
       <form onSubmit={handleSubmit} className="row g-4">
@@ -411,6 +435,9 @@ const AddCow = () => {
         <div className="col-md-6">
           <label>Cow ID</label>
           <input type="number" name="cowId" className="form-control" value={form.cowId} onChange={handleChange} />
+          {
+            cowIdError ? <span className='text-warning'>Cow Already Exist</span> : ""
+          }
         </div>
 
         <div className="col-md-6">
@@ -459,11 +486,12 @@ const AddCow = () => {
         </div>
 
         <div className="col-12 text-center">
-          <button type="submit" className="btn btn-success px-5">Submit 🐄</button>
+          <button type="submit" className="btn btn-success px-5">Add Cow 🐄</button>
         </div>
 
       </form>
     </div>
+          </>
   );
 };
 

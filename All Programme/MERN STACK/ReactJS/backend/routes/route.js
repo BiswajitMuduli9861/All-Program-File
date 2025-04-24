@@ -27,10 +27,11 @@ router.post('/login', login);
 router.get('/userwithallcows/:id', allcows); // get all cows of user
 
 //cows Related
+
 router.post("/addcow",upload.single('image'),addCow)
 router.get("/cowwithuser/:id",allCowWithUsers)
 router.get("/indcow/:id",indiavidualCow)
-router.put("/updatecow/:id",updateCow)
+router.put("/updatecow/:id",upload.single('image'),updateCow)
 router.delete("/deletecow/:id",deleteCow)
 
 //milk related
