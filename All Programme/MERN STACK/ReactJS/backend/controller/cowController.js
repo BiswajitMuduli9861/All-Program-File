@@ -33,7 +33,7 @@ const addCow = async(req,res) =>{
 }
 const allCowWithUsers = async(req,res) =>{ 
     try {
-        const CowDataWithUser = await cowModel.findById({_id:req.params.id}).populate({path:"owner",select:"_id name email"},).populate("milkData");          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi 
+        const CowDataWithUser = await cowModel.findById({_id:req.params.id}).populate({path:"owner",select:"_id name email"},).populate("milkData").populate("healths");          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi 
         // const CowData = await cowModel.findById({_id:req.params.id}).populate({path:"users",select:"name email"});  // any field populate
         res.status(200).json({ message: "All Cows", cowWthUser: CowDataWithUser});
     } catch (error) {

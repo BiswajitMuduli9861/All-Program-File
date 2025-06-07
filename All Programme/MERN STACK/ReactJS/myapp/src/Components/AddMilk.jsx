@@ -114,10 +114,10 @@ const AddMilk = () => {
   );
   
   return (
-    <>
+    <div style={{backgroundColor:"rgb(33, 33, 33)",height:"100vh",paddingTop:"70px"}}>
       <ToastContainer/>
-    <div className="container form-animate py-5 px-4 shadow-lg rounded bg-light text-dark border border-danger mt-5 rounded-5">
-      <h2 className="text-center mb-4 text-primary slide-in">🥛 Add Milk Record</h2>
+    <div className="container form-animate py-5 px-4 shadow-lg rounded text-dark border border-danger rounded-5" style={{backgroundColor:"rgb(90, 90, 90)"}}>
+      <h2 className="text-center mb-4 text-white slide-in">🥛 Add Milk Record</h2>
       <form onSubmit={handleSubmit} className="row g-4 fade-in">
         <div className="col-md-6">{renderFloatingInput('Cow ID', 'cowId', 'number')}
           {
@@ -133,7 +133,7 @@ const AddMilk = () => {
         </div>
       </form>
     </div>
-    </>
+    </div>
   );
 };
 

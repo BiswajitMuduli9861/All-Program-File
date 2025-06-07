@@ -1,5 +1,8 @@
 const healthModel = require('../model/healthModel');
 const cowModel = require('../model/cowModel');
+const userModel = require('../model/userModel');
+const { populate } = require('../model/milkModel');
+const { model } = require('mongoose');
 
 
     const addHealth = async (req, res) => {
@@ -28,7 +31,7 @@ console.log(req.body)
 
     const allHealthWithCow = async(req,res)=>{
         try {
-            const healthData = await healthModel.find({});          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi 
+            const healthData = await userModel.find({_id:req.params.id}).populate({path:'cowsData',populate:{path:"healthData", model:'healths'}});          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi 
 
             if(!healthData){
                 return res.status(404).json({error:"Health not Found"});
@@ -42,7 +45,7 @@ console.log(req.body)
     const indivitualHealthWithCow = async(req,res) =>{ 
         try {
             const healthDataWithCow = await healthModel.findById({_id:req.params.id}).populate('cowId');          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi 
-            res.status(200).json({ message: "All Cows", healthWithCow: healthDataWithCow});
+            res.status(200).json({ message: "All Health", healthWithCow: healthDataWithCow});
         } catch (error) {
             return res.status(500).json({ error: "Internal Server Error", details: error.message });
             
@@ -50,12 +53,13 @@ console.log(req.body)
     }
     
     const updateHealth = async(req,res)=>{
+
         const {cowId, cowName, healthStatus, symptoms, diagnosis, treatment, medication, temperature, pulse, respiratoryRate,description} = req.body;
         try {
             if(!cowId || !cowName || !healthStatus){
                 return res.status(422).json({error:"plz fill the field properly"})
             }
-            const updateHealth = await milkModel.findByIdAndUpdate(req.params.id, {cowId, cowName, healthStatus, symptoms, diagnosis, treatment, medication, temperature, pulse, respiratoryRate,description},{new:true});
+            const updateHealth = await healthModel.findByIdAndUpdate(req.params.id, {cowId, cowName, healthStatus, symptoms, diagnosis, treatment, medication, temperature, pulse, respiratoryRate,description},{new:true});
             if(!updateHealth){
                 return res.status(404).json({error:"Healrh not Found"});
             }

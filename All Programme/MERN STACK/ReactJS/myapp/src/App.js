@@ -91,6 +91,8 @@ import AllHealth from "./Components/AllHealth";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import UpdateCow from "./Components/UpdateCow";
+import UpdateMIlk from "./Components/UpdateMIlk";
+import UpdateHealth from "./Components/UpdateHealth";
 
 const App = () => {
   const [user, setUser] = useState(false);
@@ -127,6 +129,8 @@ const App = () => {
           <Route path="/addcow" element={<ProtectedRoute ><AddCow /></ProtectedRoute>} />
           <Route path="/allcows" element={<ProtectedRoute><AllCows /></ProtectedRoute>} />
           <Route path="/allcows/updatecow/:id" element={<ProtectedRoute><UpdateCow /></ProtectedRoute>} />
+          <Route path="/updatemilk/:milkId" element={<ProtectedRoute><UpdateMIlk /></ProtectedRoute>} />
+          <Route path="/updatehealth/:healthId" element={<ProtectedRoute><UpdateHealth /></ProtectedRoute>} />
           <Route path="/addmilk" element={<ProtectedRoute><AddMilk /></ProtectedRoute>} />
           <Route path="/cowmilks" element={<ProtectedRoute><AllMilk /></ProtectedRoute>} />
           <Route path="/addhealth" element={<ProtectedRoute><AddHealth /></ProtectedRoute>} />

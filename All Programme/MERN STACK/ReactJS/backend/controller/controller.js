@@ -58,6 +58,7 @@ const login = async(req,res)=>{
 
  const allcows = async(req,res)=>{
     try {
+        console.log(req.params.id)
         
         const allcowsData = await userModel.findById({_id:req.params.id}).populate("cowsData");          // {_id:req.params.id} emiti bi chaliba ||_id| database re store achhi ||req.parama.id|| url me achhi
         res.status(201).json({message:"All cows",userAllCows:allcowsData})

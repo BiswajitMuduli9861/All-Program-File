@@ -37,6 +37,7 @@ router.delete("/deletecow/:id",deleteCow)
 //milk related
 
 router.post("/addmilk",addMilk)
+router.get("/allmilks/:id",allMilkWithCow)
 router.get("/allmilks",allMilkWithCow)
 router.get("/indmilk/:id",indivitualMilkAndCow)
 router.put("/updatemilk/:id",updateMilk)
@@ -44,8 +45,8 @@ router.delete("/deletemilk/:id",deleteMilk)
 
 //Health Related
 router.post("/addhealth",addHealth);
-router.get("/allhealths",allHealthWithCow);
-router.get('indhealth/:id',indivitualHealthWithCow);
+router.get("/allhealths/:id",allHealthWithCow);
+router.get('/indhealth/:id',indivitualHealthWithCow);
 router.put("/updatehealth/:id",updateHealth)
 router.delete("/deletehealth/:id",deleteHealth)
 module.exports = router;

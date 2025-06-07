@@ -92,7 +92,7 @@ console.log(showModal,58)
     className="form-control w-25"
     placeholder="Search cow by name or ID..."
     value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+    onChange={(e) => setSearchTerm(e.target.value.toLowerCase().trim())}
   />
 </div>
 
@@ -101,12 +101,27 @@ console.log(showModal,58)
                 data?.userAllCows?.cowsData.filter((cow)=>{ 
                   return(
 
+                    cow.cowId.toString().toLowerCase().includes(searchTerm) ||   // use include ke bina bhi ||match|| ||search||
+                    cow.cowName.toLowerCase().includes(searchTerm) ||
+                    cow.breed.toLowerCase().includes(searchTerm)
+
+                  )
+                }).length === 0 ? (<div className="text-center w-100">
+                  <h4 className="text-danger">Cow Not Found</h4>
+                </div>)  
+                
+                
+                :
+                
+                ( data?.userAllCows?.cowsData.filter((cow)=>{ 
+                  return(
+
                     cow.cowId.toString().toLowerCase().includes(searchTerm) ||
                     cow.cowName.toLowerCase().includes(searchTerm) ||
                     cow.breed.toLowerCase().includes(searchTerm)
 
                   )
-                }).map((value,index)=>(
+                }).slice().reverse().map((value,index)=>(
                 <div className="col" key={index}  style={{cursor:"pointer"}}>
               
 
@@ -130,7 +145,7 @@ console.log(showModal,58)
                 </div>
                 
               </div>
-                ))
+                )))
               }
         
            
@@ -156,7 +171,7 @@ console.log(showModal,58)
                   <button className='mb-2 fs-3' style={{color:"white", border:"none",backgroundColor:"red"}} >×</button>
                     
                   </div>
-                  <div className=" d-flex flex-column m-4 p-3 overflow-auto rounded-4" style={{ height:"65vh"}}>
+                  <div className=" d-flex flex-column m-4 p-3 overflow-auto rounded-4" style={{ height:"65vh",scrollbarWidth:"none"}}>
                     <img src={`http://localhost:5000/uploads/${selectedCow.image}`} alt="Cow Image" className='w-50 rounded-5 mb-2' style={{height:"40vh"}}/>
                     <p><strong>CowId: </strong>{selectedCow.cowId}</p>
                     <p><strong>Cow Name: </strong>{selectedCow.cowName}</p>

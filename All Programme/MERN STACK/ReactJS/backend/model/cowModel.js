@@ -51,10 +51,10 @@ const cowSchema =new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"milks",   // milks heuchi model
     }],
-    healthData:{
+    healthData:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"healths",
-    },
+    }],
   
 
 }, {timestamps:true});

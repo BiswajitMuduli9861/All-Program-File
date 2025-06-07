@@ -113,7 +113,7 @@ const Navbar = ({ User, Logout }) => {
   };
 
   return (
-    <div className="d-flex justify-content-around" style={{ backgroundColor: "rgb(196, 214, 228)", position: "sticky", top: "0", zIndex: "1", width: "100%" }}>
+    <div className="d-flex justify-content-around" style={{ backgroundColor: "rgb(196, 214, 228)", position: "sticky", top: "0", zIndex: "1", width: "100%",zIndex:3 }}>
       <div>
         <Link to="/">
           <img className="rounded-circle p-2" src="/homeImg/logo.jpeg" alt="" style={{ width: "28%" }} />

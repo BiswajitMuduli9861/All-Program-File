@@ -1,8 +1,14 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios'
+import { useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
-const CowHealthForm = () => {
+const UpdateHealth = () =>{
+  
+  const {healthId} = useParams();
+  // console.log(healthId)
+
   const [form, setForm] = useState({
     cowId: '',
     cowName: '',
@@ -44,13 +50,38 @@ const CowHealthForm = () => {
     setForm({ ...form, medication: meds });
   };
 
+
+  const updateHealth = async() =>{
+      const res = await axios.get(`http://localhost:5000/av1/indhealth/${healthId}`)
+      setForm({
+        cowId: res.data.healthWithCow.cowId,
+        cowName: res.data.healthWithCow.cowName,
+        healthStatus: res.data.healthWithCow.healthStatus,
+        symptoms: res.data.healthWithCow.symptoms,
+        diagnosis: res.data.healthWithCow.diagnosis,
+        treatment: res.data.healthWithCow.treatment,
+        medication: res.data.healthWithCow.medication || [{ medicineName: '', dosage: '', duration: '' }],
+        temperature: res.data.healthWithCow.temperature,
+        pulse: res.data.healthWithCow.pulse,
+        respiratoryRate: res.data.healthWithCow.respiratoryRate,
+        description: res.data.healthWithCow.description,
+      })
+  }
+
+
+  useEffect(()=>{
+    updateHealth();
+  },[])
+
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     // console.log('Form Data:', form);
 
     try {
-      const healthData = await axios.post("http://localhost:5000/av1/addhealth",form)
+      const healthData = await axios.put(`http://localhost:5000/av1/updatehealth/${healthId}`,form)
       console.log(healthData)
+      toast.success("Health Updated Successfully");
     } catch (error) {
       console.log(error)
     }
@@ -75,10 +106,9 @@ const CowHealthForm = () => {
   );
 
   return (
-    <div style={{backgroundColor:"rgb(33, 33, 33)",paddingTop:"70px",paddingBottom:"70px"}}>
-
-    <div className="container form-animate py-5 px-4 shadow-lg rounded" style={{backgroundColor:"rgb(57, 53, 53)"}}>
-      <h2 className="text-center mb-4 text-white slide-in">🐄 Cow Health Form</h2>
+    <div className="container form-animate py-5 px-4 shadow-lg rounded bg-light">
+      <ToastContainer/>
+      <h2 className="text-center mb-4 text-primary slide-in">🐄 Update Health Form</h2>
       <form onSubmit={handleSubmit} className="row g-4 fade-in">
         <div className="col-md-6">{renderFloatingInput('Cow ID', 'cowId')}</div>
         <div className="col-md-6">{renderFloatingInput('Cow Name', 'cowName')}</div>
@@ -91,7 +121,7 @@ const CowHealthForm = () => {
               name="healthStatus"
               value={form.healthStatus}
               onChange={handleChange}
-              >
+            >
               <option value="">Select Health Status</option>
               <option value="healthy">Healthy</option>
               <option value="fregnecy">Pregnancy</option>
@@ -107,7 +137,7 @@ const CowHealthForm = () => {
         <div className="col-12">
           <h5 className="text-info slide-in">Medications 💊</h5>
           {form.medication.map((med, index) => (
-            <div key={index} className="row g-2 mb-2 border border-dark-subtle p-3 rounded fade-in" >
+            <div key={index} className="row g-2 mb-2 border p-3 rounded bg-white fade-in">
               <div className="col-md-4">
                 <input
                   type="text"
@@ -126,7 +156,7 @@ const CowHealthForm = () => {
                   name="dosage"
                   value={med.dosage}
                   onChange={(e) => handleMedicationChange(e, index)}
-                  />
+                />
               </div>
               <div className="col-md-3">
                 <input
@@ -136,14 +166,14 @@ const CowHealthForm = () => {
                   name="duration"
                   value={med.duration}
                   onChange={(e) => handleMedicationChange(e, index)}
-                  />
+                />
               </div>
               <div className="col-md-2">
                 <button type="button" className="btn btn-outline-danger w-100" onClick={() => removeMedication(index)}>Remove</button>
               </div>
             </div>
           ))}
-          <button type="button" className="btn btn-outline-primary mb-3 text-white" onClick={addMedication}>+ Add Medication</button>
+          <button type="button" className="btn btn-outline-primary mb-3" onClick={addMedication}>+ Add Medication</button>
         </div>
 
         <div className="col-md-4">{renderFloatingInput('Temperature', 'temperature')}</div>
@@ -160,19 +190,19 @@ const CowHealthForm = () => {
               name="description"
               value={form.description}
               onChange={handleChange}
-              ></textarea>
+            ></textarea>
             <label htmlFor="floating-description">Description</label>
           </div>
         </div>
 
         <div className="col-12 text-center">
-          <button type="submit" className="btn btn-success px-5 scale-in">Add Health 🐮</button>
+          <button type="submit" className="btn btn-success px-5 scale-in">Update Health 🐮</button>
         </div>
       </form>
     </div>
-              </div>
   );
 };
 
-export default CowHealthForm;
 
+
+export default UpdateHealth

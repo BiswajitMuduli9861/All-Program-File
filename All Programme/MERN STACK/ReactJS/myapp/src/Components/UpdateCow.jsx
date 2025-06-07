@@ -95,7 +95,7 @@ const UpdateCow = () => {
 
           headers:{'Content-Type':'multipart/form-data'},
         })
-        console.log(indivisualCowData)
+        // console.log(indivisualCowData)
       
       
     } catch (error) {
