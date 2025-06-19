@@ -13,6 +13,6 @@ const allRoutes = require('./routes/route')
 app.use(express.json());
 app.use(cors())
 app.use("/av1",allRoutes)
-app.listen(5000,()=>{
+app.listen(500,()=>{
   console.log("Listing the port number 5000")
 })

@@ -306,12 +306,12 @@ const Login = ({Login}) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <spam
+                <span
                   className="input-group-text"
                   onClick={() => dispatch({ type: "togglePassword" })}
                   >
                   {set.passwordType === "text" ? <VscEye /> : <VscEyeClosed />}
-                </spam>
+                </span>
               </div>
               {
                   
