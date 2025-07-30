@@ -2,9 +2,12 @@ import React, { act, useReducer, useState } from 'react';
 import axios from 'axios';
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
+import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-const SignUp = ({SetRegister}) => {
-
+const SignUp = () => {
+    const navigate = useNavigate();
     const [signup, setSignup] = useState({
         fullName: '',
         email: '',
@@ -55,6 +58,19 @@ const SignUp = ({SetRegister}) => {
                 setSubmitted(false)
                 setCheckEmail(false)
                 setMatchPassword(false);
+                toast.success('User created successfully', {
+                    position: "top-right",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                setTimeout(() => {
+                    
+                    navigate('/login');
+                }, 4000);
             }
         
             
@@ -96,8 +112,16 @@ const initialState = {
     const [state, dispatch] = useReducer(reducer, initialState);
     // console.log(state)
     
+
+     const loginWithGoogle = () => {
+        localStorage.setItem("userExist", "true");
+        window.open('http://localhost:5000/auth/google',"_self")
+    }
+
+
     return (
         <div className="flex justify-center items-center min-h-screen bg-[#101828]">
+             <ToastContainer/>
             <form className="flex flex-col gap-2.5 bg-[#1E2939] p-8 w-[450px] rounded-2xl font-sans shadow" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label className="text-gray-100 font-semibold">Name</label>
@@ -138,7 +162,7 @@ const initialState = {
                     />
                 </div>
                 {
-                   checkEmail ? <p className='text-red-500 text-sm'>Email already exists</p> : "" //or checkEmail && <p className='text-red-500 text-sm'>Email already exists</p> 
+                   checkEmail ? <p className='text-amber-500 text-sm'>Email already exists</p> : "" //or checkEmail && <p className='text-red-500 text-sm'>Email already exists</p> 
                 }
                 <div className="flex flex-col">
                     <label className="text-gray-100 font-semibold">Password</label>
@@ -191,9 +215,11 @@ const initialState = {
                 </button>
                 <p className="text-center text-gray-100 text-sm my-1.5">
                     Already have a account?
-                    <span className="text-blue-600 font-medium ml-1 cursor-pointer text-sm" onClick={()=>{SetRegister(false)}}>login</span>
+                    <Link to="/login">
+                    <span className="text-blue-600 font-medium ml-1 cursor-pointer text-sm" >login</span>
+                    </Link>
                 </p>
-                <div className="flex flex-row items-center gap-2.5 justify-between">
+                <div className="flex flex-row items-center gap-2.5 justify-between" onClick={loginWithGoogle}>
                     <button className="mt-2 w-full h-12 rounded-xl flex justify-center items-center font-medium gap-2 border border-gray-700 bg-gray-700 text-gray-100 cursor-pointer transition-colors duration-200 hover:border-blue-600">
                         <svg version="1.1" width={20} id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style={{enableBackground: 'new 0 0 512 512'}} xmlSpace="preserve">
                             <path style={{fill: '#FBBB00'}} d="M113.47,309.408L95.648,375.94l-65.139,1.378C11.042,341.211,0,299.9,0,256

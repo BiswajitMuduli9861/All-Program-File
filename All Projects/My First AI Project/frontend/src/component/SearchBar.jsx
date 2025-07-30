@@ -85,6 +85,8 @@ import React, { useState } from 'react';
 import { IoIosArrowRoundUp } from "react-icons/io";
 import axios from 'axios';
 import SearchData from './SearchData';
+import {useNavigate} from 'react-router-dom';
+import Navbar from './Navbar';
 
 const SearchBar = () => {
     const [searchValue,setSearchValue] = useState('')
@@ -96,6 +98,7 @@ const [searchResults, setSearchResults] = useState('');
   const [displayQuestion, setDisplayQuestion] = useState(true);
   const [searchIcon, setSearchIcon] = useState(false);
 
+  const navigate = useNavigate();
   const handleSubmit = async() => {
     setDisplayQuestion(false); // 
       setLoading(false); // Set loading to true when starting the search
@@ -109,7 +112,7 @@ const [searchResults, setSearchResults] = useState('');
         const response = await axios.post('http://localhost:5000/api/content', {
           question: searchValue.trim(),
           
-        })  
+        },{withCredentials: true})   // ||withCredentials: true||---ye ek Axios ka config option hai jo cookies ko automatically request ke sath bhejne ya receive karne ki permission deta hai — jab aapka frontend aur backend alag origins pe ho (e.g., frontend: localhost:3000, backend: localhost:5000).
         // return response.json();
         console.log("AI Response:", response.data,16);
         if (response.data.status === 200) {
@@ -122,6 +125,9 @@ const [searchResults, setSearchResults] = useState('');
         }
         
       } catch (error) {
+        if(error.response && error.response.status === 401){
+          navigate("/login")
+        }
         console.error("Error during search:", error);
         
       }
@@ -138,10 +144,10 @@ const [searchResults, setSearchResults] = useState('');
   };
   return (
     <>
-    <div className="h-screen ">
+    <div className="h-screen overflow-y-scroll hide-scrollbar">
+      <Navbar/>
 
       <div className="h-full bg-[#212121]  hide-scrollbar overflow-y-scroll">
-      
 
       
         <div className='flex w-full h-10/12 flex-col items-center  justify-start overflow-y-scroll custom-scrollbar'>

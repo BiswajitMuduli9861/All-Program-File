@@ -6,7 +6,7 @@ export default function Home() {
       <>
        <div>
       
-        <h1>This is the next.js programme</h1>
+        <h1>This is the next.js programme and user Home page</h1>
         </div>
       </>
     </div>

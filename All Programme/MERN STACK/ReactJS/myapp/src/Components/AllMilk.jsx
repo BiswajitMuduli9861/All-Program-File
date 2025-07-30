@@ -730,7 +730,7 @@ const AllMilk = () => {
           <div className="container d-flex justify-content-center" style={{ height: "50vh" }}>
             <div className="w-100 d-flex flex-column ">
               <div className="row d-flex justify-content-center">
-                <div className="col-12 col-md-9 col-lg-6 position-relative rounded-5 shadow" style={{ height: "50vh", backgroundColor: "rgb(90, 90, 90)" }}>
+                <div className="col-12 col-md-9 col-lg-6 position-relative rounded-5 shadow" style={{ height: "50vh", backgroundColor: "rgb(90, 90, 90)" }}> {/*position-relative parent ko diya jata hai ki jab child ko position-absolute kara sia janipariaba je mo parent kiye nahale sie top-left cornert ko paleiba */}
                   <div className="position-absolute end-0 bg-danger rounded-circle m-2 d-flex justify-content-center" onClick={closeModal} style={{ width: "8%", height: "5vh", cursor: "pointer" }}>
                     <button className='text-white fs-3' style={{ backgroundColor: "red", border: "none", height: "0" }}>×</button>
                   </div>

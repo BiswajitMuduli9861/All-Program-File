@@ -1,13 +1,23 @@
-import { Geist, Geist_Mono } from "next/font/google";
+
 import "./globals.css";
-import Navigation from "../component/Navigation";
+
+export const metadata= {
+  title:{
+   default: "User ka About Page",
+   template: "%s | Biswajit Muduli",
+  },
+  description:"This is the nextjs programe",
+  authors:[{name:"Muna Muduli"},{name:"Kuna Muduli"}],
+  keywords:["nextjs","reactjs","Fullstack Developer"]
+}
+
 
 const RootLayout = ({children})=>{
   return(
     <html className="hydrated"  foxified="">
       <body>
         <h1>hellow</h1>
-        <Navigation/>
+       
         {children}
       </body>
     </html>

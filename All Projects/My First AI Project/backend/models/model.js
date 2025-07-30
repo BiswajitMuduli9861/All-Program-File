@@ -14,11 +14,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    confirmPassword: {
-        type: String,
-        required: true
+    isVierified: {
+        type: Boolean,
+        default: false
+    },
+    OTP:{
+        type:String,
     }
+   
 
-})
+},{timestamps:true})
 const User = mongoose.model('User', userSchema);
 module.exports = User;
